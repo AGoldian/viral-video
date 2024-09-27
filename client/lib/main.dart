@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:viral_video_client/src/di/service_providers.dart';
 import 'package:viral_video_client/src/di/view_model_providers.dart';
 import 'package:viral_video_client/src/presentation/pick_video/pick_video_view.dart';
 import 'package:viral_video_client/src/presentation/theme/color_theme.dart';
@@ -18,7 +19,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: ColorTheme.controlMain),
         useMaterial3: true,
       ),
-      home: const PickVideoView(
+      navigatorKey: navigatorKeyProvider,
+      home: PickVideoView(
         viewModel: pickVideoViewModelProvider,
       ),
     );
