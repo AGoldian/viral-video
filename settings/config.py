@@ -1,6 +1,7 @@
 # Whisper config
 
-WHISPER_MODEL = 'base'
+# WHISPER_MODEL = 'base'
+WHISPER_MODEL = '/Users/s.vandanov/Desktop/viral-video/weights/medium.pt'
 
 # R2 config
 R2_SCRIPT_PATH = './R2-Tuning/tools/inference.py'
@@ -10,7 +11,7 @@ R2_CHECPOINT_PATH = './weights/r2_tuning_qvhighlights-ed516355.pth'
 
 
 # Audio config
-AUDIO_WINDOW_SIZE_IN_SECS = 5  # Размер окна для анализа в секундах
+AUDIO_WINDOW_SIZE_IN_SECS = 10  # Размер окна для анализа в секундах
 AUDIO_NUM_CANDIDATES = 5  # Количество выделенных аудио моментов
 AUDIO_OUTPUT_PATH = "extracted_audio.wav"  # Путь для извлеченного аудио
 
