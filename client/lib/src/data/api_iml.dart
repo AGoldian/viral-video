@@ -1,11 +1,10 @@
-import 'dart:io';
-
+import 'package:cross_file/cross_file.dart';
 import 'package:dio/dio.dart';
 import 'package:viral_video_client/src/data/api.dart';
 import 'package:viral_video_client/src/domain/models/process_file_request/process_file_request.dart';
 import 'package:viral_video_client/src/domain/models/process_file_response/process_file_response.dart';
 
-const _base = '127.0.0.1';
+const _base = 'http://127.0.0.1:8000';
 
 class ApiImp implements Api {
   final Dio _dio;
@@ -23,9 +22,18 @@ class ApiImp implements Api {
   }
 
   @override
-  Future<String> saveFile(File file) async {
-    final response = await _dio.post<String>('$_base/load_file');
+  Future<String> saveFile(XFile file) async {
+    final response = await _dio.post<Map<String, dynamic>>(
+      '$_base/load_file',
+      data: MultipartFile.fromBytes(await file.readAsBytes()).finalize(),
+      options: Options(
+        contentType: 'application/octet-stream',
+        headers: {
+          'Accept': 'application/json',
+        },
+      ),
+    );
 
-    return response.data!;
+    return response.data!['filePath'];
   }
 }

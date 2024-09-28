@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:viral_video_client/src/presentation/video_preview/view_state/gallery_view_state.dart';
 import 'package:viral_video_client/src/presentation/video_preview/view_state/video_preview_view_state.dart';
 
+import '../presentation/video_editor/video_editor_view.dart';
 import '../presentation/video_preview/video_preview_gallery.dart';
 
 class NavigationManager {
@@ -26,6 +29,14 @@ class NavigationManager {
                 ),
               ],
             ),
+          ),
+        ),
+      );
+
+  Future<File?> openVideoEdit(File file) => Navigator.of(_context).push(
+        MaterialPageRoute(
+          builder: (_) => VideoEditor(
+            file: file,
           ),
         ),
       );

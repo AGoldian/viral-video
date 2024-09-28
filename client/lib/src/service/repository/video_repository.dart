@@ -1,5 +1,5 @@
-import 'dart:io';
+import 'package:cross_file/cross_file.dart';
 
 abstract class VideoRepository {
-  Future<File?> loadVideo([String? path]);
+  Future<XFile?> loadVideo([String? path]);
 }

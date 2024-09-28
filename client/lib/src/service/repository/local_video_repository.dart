@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:cross_file/cross_file.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -9,7 +9,7 @@ class LocalVideoRepository implements VideoRepository {
   const LocalVideoRepository();
 
   @override
-  Future<File?> loadVideo([String? path]) async {
+  Future<XFile?> loadVideo([String? path]) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       dialogTitle: 'Выберите видео для загрузки',
       allowMultiple: false,
@@ -19,7 +19,7 @@ class LocalVideoRepository implements VideoRepository {
     if (result != null) {
       Uint8List fileBytes = result.files.first.bytes!;
 
-      return File.fromRawPath(fileBytes);
+      return result.files.first.xFile;
     }
 
     return null;
