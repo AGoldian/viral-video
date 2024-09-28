@@ -18,24 +18,36 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$GalleryViewState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String appBarTitle, String appBarSubtitle,
-            List<VideoPreviewViewState> videoPreviews, bool isLoading)
+    required TResult Function(
+            String appBarTitle,
+            String appBarSubtitle,
+            List<VideoPreviewViewState> videoPreviews,
+            bool isLoading,
+            int? previewIndex)
         data,
     required TResult Function() empty,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String appBarTitle, String appBarSubtitle,
-            List<VideoPreviewViewState> videoPreviews, bool isLoading)?
+    TResult? Function(
+            String appBarTitle,
+            String appBarSubtitle,
+            List<VideoPreviewViewState> videoPreviews,
+            bool isLoading,
+            int? previewIndex)?
         data,
     TResult? Function()? empty,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String appBarTitle, String appBarSubtitle,
-            List<VideoPreviewViewState> videoPreviews, bool isLoading)?
+    TResult Function(
+            String appBarTitle,
+            String appBarSubtitle,
+            List<VideoPreviewViewState> videoPreviews,
+            bool isLoading,
+            int? previewIndex)?
         data,
     TResult Function()? empty,
     required TResult orElse(),
@@ -93,7 +105,8 @@ abstract class _$$GalleryDataViewStateImplCopyWith<$Res> {
       {String appBarTitle,
       String appBarSubtitle,
       List<VideoPreviewViewState> videoPreviews,
-      bool isLoading});
+      bool isLoading,
+      int? previewIndex});
 }
 
 /// @nodoc
@@ -113,6 +126,7 @@ class __$$GalleryDataViewStateImplCopyWithImpl<$Res>
     Object? appBarSubtitle = null,
     Object? videoPreviews = null,
     Object? isLoading = null,
+    Object? previewIndex = freezed,
   }) {
     return _then(_$GalleryDataViewStateImpl(
       appBarTitle: null == appBarTitle
@@ -131,6 +145,10 @@ class __$$GalleryDataViewStateImplCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      previewIndex: freezed == previewIndex
+          ? _value.previewIndex
+          : previewIndex // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -142,7 +160,8 @@ class _$GalleryDataViewStateImpl implements GalleryDataViewState {
       {required this.appBarTitle,
       required this.appBarSubtitle,
       required final List<VideoPreviewViewState> videoPreviews,
-      required this.isLoading})
+      required this.isLoading,
+      this.previewIndex})
       : _videoPreviews = videoPreviews;
 
   @override
@@ -159,10 +178,12 @@ class _$GalleryDataViewStateImpl implements GalleryDataViewState {
 
   @override
   final bool isLoading;
+  @override
+  final int? previewIndex;
 
   @override
   String toString() {
-    return 'GalleryViewState.data(appBarTitle: $appBarTitle, appBarSubtitle: $appBarSubtitle, videoPreviews: $videoPreviews, isLoading: $isLoading)';
+    return 'GalleryViewState.data(appBarTitle: $appBarTitle, appBarSubtitle: $appBarSubtitle, videoPreviews: $videoPreviews, isLoading: $isLoading, previewIndex: $previewIndex)';
   }
 
   @override
@@ -177,12 +198,19 @@ class _$GalleryDataViewStateImpl implements GalleryDataViewState {
             const DeepCollectionEquality()
                 .equals(other._videoPreviews, _videoPreviews) &&
             (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading));
+                other.isLoading == isLoading) &&
+            (identical(other.previewIndex, previewIndex) ||
+                other.previewIndex == previewIndex));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, appBarTitle, appBarSubtitle,
-      const DeepCollectionEquality().hash(_videoPreviews), isLoading);
+  int get hashCode => Object.hash(
+      runtimeType,
+      appBarTitle,
+      appBarSubtitle,
+      const DeepCollectionEquality().hash(_videoPreviews),
+      isLoading,
+      previewIndex);
 
   /// Create a copy of GalleryViewState
   /// with the given fields replaced by the non-null parameter values.
@@ -197,36 +225,51 @@ class _$GalleryDataViewStateImpl implements GalleryDataViewState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String appBarTitle, String appBarSubtitle,
-            List<VideoPreviewViewState> videoPreviews, bool isLoading)
+    required TResult Function(
+            String appBarTitle,
+            String appBarSubtitle,
+            List<VideoPreviewViewState> videoPreviews,
+            bool isLoading,
+            int? previewIndex)
         data,
     required TResult Function() empty,
   }) {
-    return data(appBarTitle, appBarSubtitle, videoPreviews, isLoading);
+    return data(
+        appBarTitle, appBarSubtitle, videoPreviews, isLoading, previewIndex);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String appBarTitle, String appBarSubtitle,
-            List<VideoPreviewViewState> videoPreviews, bool isLoading)?
+    TResult? Function(
+            String appBarTitle,
+            String appBarSubtitle,
+            List<VideoPreviewViewState> videoPreviews,
+            bool isLoading,
+            int? previewIndex)?
         data,
     TResult? Function()? empty,
   }) {
-    return data?.call(appBarTitle, appBarSubtitle, videoPreviews, isLoading);
+    return data?.call(
+        appBarTitle, appBarSubtitle, videoPreviews, isLoading, previewIndex);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String appBarTitle, String appBarSubtitle,
-            List<VideoPreviewViewState> videoPreviews, bool isLoading)?
+    TResult Function(
+            String appBarTitle,
+            String appBarSubtitle,
+            List<VideoPreviewViewState> videoPreviews,
+            bool isLoading,
+            int? previewIndex)?
         data,
     TResult Function()? empty,
     required TResult orElse(),
   }) {
     if (data != null) {
-      return data(appBarTitle, appBarSubtitle, videoPreviews, isLoading);
+      return data(
+          appBarTitle, appBarSubtitle, videoPreviews, isLoading, previewIndex);
     }
     return orElse();
   }
@@ -268,12 +311,14 @@ abstract class GalleryDataViewState implements GalleryViewState {
       {required final String appBarTitle,
       required final String appBarSubtitle,
       required final List<VideoPreviewViewState> videoPreviews,
-      required final bool isLoading}) = _$GalleryDataViewStateImpl;
+      required final bool isLoading,
+      final int? previewIndex}) = _$GalleryDataViewStateImpl;
 
   String get appBarTitle;
   String get appBarSubtitle;
   List<VideoPreviewViewState> get videoPreviews;
   bool get isLoading;
+  int? get previewIndex;
 
   /// Create a copy of GalleryViewState
   /// with the given fields replaced by the non-null parameter values.
@@ -325,8 +370,12 @@ class _$GalleryEmptyViewStateImpl implements GalleryEmptyViewState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String appBarTitle, String appBarSubtitle,
-            List<VideoPreviewViewState> videoPreviews, bool isLoading)
+    required TResult Function(
+            String appBarTitle,
+            String appBarSubtitle,
+            List<VideoPreviewViewState> videoPreviews,
+            bool isLoading,
+            int? previewIndex)
         data,
     required TResult Function() empty,
   }) {
@@ -336,8 +385,12 @@ class _$GalleryEmptyViewStateImpl implements GalleryEmptyViewState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String appBarTitle, String appBarSubtitle,
-            List<VideoPreviewViewState> videoPreviews, bool isLoading)?
+    TResult? Function(
+            String appBarTitle,
+            String appBarSubtitle,
+            List<VideoPreviewViewState> videoPreviews,
+            bool isLoading,
+            int? previewIndex)?
         data,
     TResult? Function()? empty,
   }) {
@@ -347,8 +400,12 @@ class _$GalleryEmptyViewStateImpl implements GalleryEmptyViewState {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String appBarTitle, String appBarSubtitle,
-            List<VideoPreviewViewState> videoPreviews, bool isLoading)?
+    TResult Function(
+            String appBarTitle,
+            String appBarSubtitle,
+            List<VideoPreviewViewState> videoPreviews,
+            bool isLoading,
+            int? previewIndex)?
         data,
     TResult Function()? empty,
     required TResult orElse(),

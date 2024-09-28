@@ -43,4 +43,17 @@ class ApiImp implements Api {
     // TODO: implement poll
     throw UnimplementedError();
   }
+
+  @override
+  Future<XFile> getFile(String path) async {
+    final response = await _dio.get(
+      '$_base/files/$path',
+      options: Options(
+        responseType: ResponseType.bytes,
+        followRedirects: false,
+      ),
+    );
+
+    return XFile.fromData(response.data);
+  }
 }

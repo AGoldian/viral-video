@@ -6,4 +6,5 @@ abstract class Api {
   Future<String> saveFile(XFile file);
   Future<ProcessFileResponse> processFile(String path);
   Future<ProcessFileResponse> poll(String path);
+  Future<XFile> getFile(String path);
 }

@@ -7,6 +7,8 @@ import logging
 import uuid
 import time
 
+from starlette.responses import FileResponse
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 app = FastAPI()
@@ -29,6 +31,7 @@ async def process_file(request: Request):
     file_name = json['path']
 
     time.sleep(10)
+    # TODO: goldian прикрутить модель
 
     return JSONResponse(content={
         'videoName': file_name,
@@ -41,6 +44,11 @@ async def process_file(request: Request):
             }
         ]
     })
+
+
+@app.get('/files/{path}')
+async def load_file(path: str):
+    return FileResponse(path)
 
 
 @app.post("/load_file")
@@ -65,6 +73,11 @@ async def analyze_image_options():
 
 
 @app.options("/process_file")
+async def analyze_image_options():
+    return JSONResponse(content={})
+
+
+@app.options('/files/{path}')
 async def analyze_image_options():
     return JSONResponse(content={})
 

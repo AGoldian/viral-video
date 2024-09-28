@@ -74,5 +74,10 @@ class PickVideoViewModel extends StateNotifier<PickVideoViewState> {
     );
 
     _galleryViewModel.updateDataWithNewModel(model);
+
+    state = state.copyWith(
+      isLoading: false,
+      processDescription: null,
+    );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cross_file/cross_file.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'video_preview_view_state.freezed.dart';
@@ -7,6 +8,7 @@ class VideoPreviewViewState with _$VideoPreviewViewState {
   const factory VideoPreviewViewState({
     required String title,
     required Duration duration,
+    required XFile video,
   }) = _VideoPreviewViewState;
 }
 

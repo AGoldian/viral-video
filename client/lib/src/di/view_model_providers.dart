@@ -14,5 +14,6 @@ final pickVideoViewModelProvider = PickVideoViewModel(
 );
 
 final galleryViewModelProvider = VideoPreviewGalleryViewModel(
+  api: apiProvider,
   navigationManager: navigationManagerProvider,
 );

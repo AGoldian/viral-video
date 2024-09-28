@@ -10,6 +10,7 @@ class GalleryViewState with _$GalleryViewState {
     required String appBarSubtitle,
     required List<VideoPreviewViewState> videoPreviews,
     required bool isLoading,
+    int? previewIndex,
   }) = GalleryDataViewState;
 
   const factory GalleryViewState.empty() = GalleryEmptyViewState;
