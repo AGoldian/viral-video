@@ -1,7 +1,34 @@
 from moviepy.editor import VideoFileClip, CompositeVideoClip, TextClip
 from moviepy.video.tools.subtitles import SubtitlesClip
+from moviepy.video.compositing.concatenate import concatenate_videoclips
 import whisper
 import os
+
+
+def aggregate_timestamp(timestamps, video_path, output_path):
+    # Function to convert timestamp (MM:SS) to seconds
+    def time_to_seconds(time_str):
+        minutes, seconds = map(int, time_str.split(':'))
+        return minutes * 60 + seconds
+
+    # Create a list to hold the video clips
+    clips = []
+
+    # Load the video
+    video = VideoFileClip(video_path)
+
+    # Extract the clips based on the timestamps
+    for ts in timestamps:
+        start_time = time_to_seconds(ts['time_start'])
+        end_time = time_to_seconds(ts['time_end'])
+
+        # Extract the subclip
+        clip = video.subclip(start_time, end_time)
+        clips.append(clip)
+
+    # Concatenate the clips and save the result
+    final_video = concatenate_videoclips(clips)
+    final_video.write_videofile(output_path, codec="libx264")
 
 # Путь к файлу шрифта
 font_path = "Obelix Pro.ttf"
@@ -81,12 +108,44 @@ def create_subtitles(video_path, segments, output_path):
     # Сохраняем результат
     video_with_subtitles.write_videofile(output_path, codec="libx264", fps=clip.fps)
 
+def create_subtitles2(video_path, segments, output_path):
+    # Загружаем видео
+    clip = VideoFileClip(video_path)
 
-def process_video(video_path, output_path, whisper_model="base"):
+    subtitle_clips = []
+    
+    for segment in segments:
+        # Разбиваем текст на фрагменты
+        chunks = split_text_to_chunks(segment['text'].strip(), clip)
+        
+        # Определяем длительность каждого фрагмента
+        chunk_duration = (segment['end'] - segment['start']) / len(chunks)
+        
+        # Создаем отдельный TextClip для каждого фрагмента
+        for i, chunk in enumerate(chunks):
+            chunk_start = segment['start'] + i * chunk_duration
+            
+            # Создаем TextClip с нужной стилизацией
+            text_clip = TextClip(chunk, font=font_path, fontsize=40, color="yellow",
+                                 stroke_color="black", stroke_width=4, size=(clip.w, None))
+            text_clip = text_clip.set_duration(chunk_duration).set_start(chunk_start)
+            subtitle_clips.append(text_clip)
+
+    # Накладываем субтитры на видео, поднимаем их чуть выше
+    video_with_subtitles = CompositeVideoClip([clip] + [sub.set_pos(('center', clip.h * 0.8)) for sub in subtitle_clips])
+    
+    # Сохраняем результат
+    video_with_subtitles.write_videofile(output_path, codec="libx264", fps=clip.fps)
+
+
+def process_video(timestamps, video_path, output_path, whisper_model="base"):
+    print('Объединяем отрезки')
+    aggregate_timestamp(timestamps, video_path, output_path)
+
     print("Транскрибируем видео...")
     segments = transcribe_video(video_path, whisper_model=whisper_model)
 
     print("Накладываем субтитры...")
-    create_subtitles(video_path, segments, output_path)
+    create_subtitles2(video_path, segments, output_path)
 
     print(f"Видео сохранено с субтитрами: {output_path}")
