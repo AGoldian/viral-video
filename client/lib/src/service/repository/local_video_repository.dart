@@ -17,8 +17,6 @@ class LocalVideoRepository implements VideoRepository {
     );
 
     if (result != null) {
-      Uint8List fileBytes = result.files.first.bytes!;
-
       return result.files.first.xFile;
     }
 
