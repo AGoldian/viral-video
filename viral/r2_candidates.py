@@ -53,21 +53,6 @@ def parse_output_and_create_json(output):
     return json.dumps(results, ensure_ascii=False, indent=4)
 
 
-def merge_jsons(json_list):
-    """
-    Объединяет список JSON строк в один JSON объект.
-    
-    Аргументы:
-    json_list (list): Список строк, содержащих JSON объекты.
-    
-    Возвращает:
-    str: Объединенный JSON объект в виде строки.
-    """
-    combined_results = []
-    for json_str in json_list:
-        combined_results.extend(json.loads(json_str))
-    return json.dumps(combined_results, ensure_ascii=False, indent=4)
-
 
 def get_json_from_video_r2(fname, script_path, prompt, config_path, checkpoint_path):
     """

@@ -9,49 +9,6 @@ from datetime import timedelta
 import srt
 
 
-def video_to_text(video_name, is_whisper=False):
-    if is_whisper == True:
-        def run_transcribe(audio_file_name):
-            print("Whisper is started")
-            model_name = 'base'
-            model = whisper.load_model(model_name)
-            audio_file_language = 'russian'
-            no_speech_threshold = 0.2
-
-            result = model.transcribe(
-                audio_file_name,
-                language=audio_file_language,
-                verbose=True,
-                no_speech_threshold=no_speech_threshold,
-                suppress_tokens="",
-                initial_prompt="",
-                condition_on_previous_text="Нет"
-                )
-
-            result_srt_list = []
-            for i in result['segments']:
-                result_srt_list.append(srt.Subtitle(index=i['id'], start=timedelta(seconds=i['start']), end=timedelta(seconds=i['end']), content=i['text'].strip()))
-
-            composed_transcription = srt.compose(result_srt_list)
-            return composed_transcription
-
-        res = run_transcribe(audio_file_name=f"/tmp/video/{video_name}.mp4")
-
-        with open(f"/tmp/texts/audio_{video_name}.txt", 'w', encoding='utf-8') as f:
-            f.write(res)
-
-    file_path = f"/tmp/texts/audio_{video_name}.txt"
-
-    if not os.path.exists(file_path):
-        raise FileNotFoundError(f"File {file_path} not found.")
-
-    with open(file_path, 'r', encoding='utf-8') as file:
-        lines = file.readlines()
-
-    print(video_name)
-    print(lines)
-    return lines
-
 def text_to_timestamps(text, model, processor):
     prompt_answer = f"""
     <|startoftext|><|start_header_id|>user<|end_header_id|>
@@ -142,6 +99,49 @@ def main(video_name: str, model_dir: str):
     )
     
     # Extract text from the video (assuming `video_to_text` is defined elsewhere)
+
+def video_to_text(video_name, is_whisper=False):
+    if is_whisper == True:
+        def run_transcribe(audio_file_name):
+            print("Whisper is started")
+            model_name = 'base'
+            model = whisper.load_model(model_name)
+            audio_file_language = 'russian'
+            no_speech_threshold = 0.2
+
+            result = model.transcribe(
+                audio_file_name,
+                language=audio_file_language,
+                verbose=True,
+                no_speech_threshold=no_speech_threshold,
+                suppress_tokens="",
+                initial_prompt="",
+                condition_on_previous_text="Нет"
+                )
+
+            result_srt_list = []
+            for i in result['segments']:
+                result_srt_list.append(srt.Subtitle(index=i['id'], start=timedelta(seconds=i['start']), end=timedelta(seconds=i['end']), content=i['text'].strip()))
+
+            composed_transcription = srt.compose(result_srt_list)
+            return composed_transcription
+
+        res = run_transcribe(audio_file_name=f"/tmp/video/{video_name}.mp4")
+
+        with open(f"/tmp/texts/audio_{video_name}.txt", 'w', encoding='utf-8') as f:
+            f.write(res)
+
+    file_path = f"/tmp/texts/audio_{video_name}.txt"
+
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"File {file_path} not found.")
+
+    with open(file_path, 'r', encoding='utf-8') as file:
+        lines = file.readlines()
+
+    print(video_name)
+    print(lines)
+    return lines
     text_excerpt = video_to_text(video_name, False)
     window_size = 100
     print(len(text_excerpt))

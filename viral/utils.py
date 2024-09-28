@@ -1,6 +1,33 @@
 import os
 import math
 import subprocess
+import json
+import json
+
+def merge_jsons(json_list):
+    """
+    Объединяет список JSON строк в один JSON объект.
+    
+    Аргументы:
+    json_list (list): Список строк, содержащих JSON объекты.
+    
+    Возвращает:
+    str: Объединенный JSON объект в виде строки.
+    """
+    combined_results = []
+    
+    for json_str in json_list:
+        if json_str is not None:
+            json_data = json.loads(json_str)
+            
+            if isinstance(json_data, list):  # If the JSON is a list, extend the combined list
+                combined_results.extend(json_data)
+            else:  # If the JSON is not a list, append it as an element in the combined list
+                combined_results.append(json_data)
+
+    return json.dumps(combined_results, ensure_ascii=False, indent=4)
+
+
 
 # Функция для получения размера файла в мегабайтах
 def get_file_size_mb(file_path):
@@ -9,7 +36,7 @@ def get_file_size_mb(file_path):
 
 
 # Функция для нарезки видео на части по 150 МБ
-def split_video(fname, video_path, max_size_mb=150):
+def split_video(fname, video_path, max_size_mb=10):
     video_size_mb = get_file_size_mb(video_path)
     if video_size_mb <= max_size_mb:
         return [video_path]  # Если видео меньше 150 МБ, не нарезаем

@@ -79,3 +79,4 @@ typing_extensions==4.12.2
 urllib3==2.2.3
 wcwidth==0.2.13
 zipp==3.20.2
+srt
