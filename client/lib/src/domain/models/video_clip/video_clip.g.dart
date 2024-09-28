@@ -12,6 +12,7 @@ _$VideoClipImpl _$$VideoClipImplFromJson(Map<String, dynamic> json) =>
       to: json['to'] as String,
       reasons:
           (json['reasons'] as List<dynamic>).map((e) => e as String).toList(),
+      fileLink: json['fileLink'] as String,
     );
 
 Map<String, dynamic> _$$VideoClipImplToJson(_$VideoClipImpl instance) =>
@@ -19,4 +20,5 @@ Map<String, dynamic> _$$VideoClipImplToJson(_$VideoClipImpl instance) =>
       'from': instance.from,
       'to': instance.to,
       'reasons': instance.reasons,
+      'fileLink': instance.fileLink,
     };

@@ -20,6 +20,7 @@ ProcessFileResponse _$ProcessFileResponseFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProcessFileResponse {
+  String get videoName => throw _privateConstructorUsedError;
   List<VideoClip> get clips => throw _privateConstructorUsedError;
 
   /// Serializes this ProcessFileResponse to a JSON map.
@@ -38,7 +39,7 @@ abstract class $ProcessFileResponseCopyWith<$Res> {
           ProcessFileResponse value, $Res Function(ProcessFileResponse) then) =
       _$ProcessFileResponseCopyWithImpl<$Res, ProcessFileResponse>;
   @useResult
-  $Res call({List<VideoClip> clips});
+  $Res call({String videoName, List<VideoClip> clips});
 }
 
 /// @nodoc
@@ -56,9 +57,14 @@ class _$ProcessFileResponseCopyWithImpl<$Res, $Val extends ProcessFileResponse>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? videoName = null,
     Object? clips = null,
   }) {
     return _then(_value.copyWith(
+      videoName: null == videoName
+          ? _value.videoName
+          : videoName // ignore: cast_nullable_to_non_nullable
+              as String,
       clips: null == clips
           ? _value.clips
           : clips // ignore: cast_nullable_to_non_nullable
@@ -75,7 +81,7 @@ abstract class _$$ProcessFileResponseImplCopyWith<$Res>
       __$$ProcessFileResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<VideoClip> clips});
+  $Res call({String videoName, List<VideoClip> clips});
 }
 
 /// @nodoc
@@ -91,9 +97,14 @@ class __$$ProcessFileResponseImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? videoName = null,
     Object? clips = null,
   }) {
     return _then(_$ProcessFileResponseImpl(
+      videoName: null == videoName
+          ? _value.videoName
+          : videoName // ignore: cast_nullable_to_non_nullable
+              as String,
       clips: null == clips
           ? _value._clips
           : clips // ignore: cast_nullable_to_non_nullable
@@ -105,12 +116,15 @@ class __$$ProcessFileResponseImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ProcessFileResponseImpl implements _ProcessFileResponse {
-  const _$ProcessFileResponseImpl({required final List<VideoClip> clips})
+  const _$ProcessFileResponseImpl(
+      {required this.videoName, required final List<VideoClip> clips})
       : _clips = clips;
 
   factory _$ProcessFileResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProcessFileResponseImplFromJson(json);
 
+  @override
+  final String videoName;
   final List<VideoClip> _clips;
   @override
   List<VideoClip> get clips {
@@ -121,7 +135,7 @@ class _$ProcessFileResponseImpl implements _ProcessFileResponse {
 
   @override
   String toString() {
-    return 'ProcessFileResponse(clips: $clips)';
+    return 'ProcessFileResponse(videoName: $videoName, clips: $clips)';
   }
 
   @override
@@ -129,13 +143,15 @@ class _$ProcessFileResponseImpl implements _ProcessFileResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProcessFileResponseImpl &&
+            (identical(other.videoName, videoName) ||
+                other.videoName == videoName) &&
             const DeepCollectionEquality().equals(other._clips, _clips));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_clips));
+  int get hashCode => Object.hash(
+      runtimeType, videoName, const DeepCollectionEquality().hash(_clips));
 
   /// Create a copy of ProcessFileResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -155,12 +171,15 @@ class _$ProcessFileResponseImpl implements _ProcessFileResponse {
 }
 
 abstract class _ProcessFileResponse implements ProcessFileResponse {
-  const factory _ProcessFileResponse({required final List<VideoClip> clips}) =
-      _$ProcessFileResponseImpl;
+  const factory _ProcessFileResponse(
+      {required final String videoName,
+      required final List<VideoClip> clips}) = _$ProcessFileResponseImpl;
 
   factory _ProcessFileResponse.fromJson(Map<String, dynamic> json) =
       _$ProcessFileResponseImpl.fromJson;
 
+  @override
+  String get videoName;
   @override
   List<VideoClip> get clips;
 

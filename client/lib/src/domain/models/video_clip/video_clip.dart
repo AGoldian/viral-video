@@ -9,6 +9,7 @@ class VideoClip with _$VideoClip {
     required String from,
     required String to,
     required List<String> reasons,
+    required String fileLink,
   }) = _VideoClip;
 
   factory VideoClip.fromJson(Map<String, Object?> json) =>

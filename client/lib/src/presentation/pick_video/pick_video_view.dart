@@ -73,15 +73,18 @@ class PickVideoView extends StatelessWidget {
                 ),
                 if (state.isLoading)
                   Container(
-                    margin: const EdgeInsets.only(top: 32, bottom: 16),
+                    margin: const EdgeInsets.only(top: 32),
                     height: 64,
                     width: 64,
                     child: const CircularProgressIndicator(),
                   ),
                 if (state.processDescription != null)
-                  Text(
-                    state.processDescription!,
-                    style: AppTextTheme.body2,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 32),
+                    child: Text(
+                      state.processDescription!,
+                      style: AppTextTheme.body2,
+                    ),
                   ),
                 const Expanded(
                   flex: 3,

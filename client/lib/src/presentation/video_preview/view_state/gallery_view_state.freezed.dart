@@ -16,15 +16,49 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$GalleryViewState {
-  String get appBarTitle => throw _privateConstructorUsedError;
-  String get appBarSubtitle => throw _privateConstructorUsedError;
-  List<VideoPreviewViewState> get videoPreviews =>
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String appBarTitle, String appBarSubtitle,
+            List<VideoPreviewViewState> videoPreviews, bool isLoading)
+        data,
+    required TResult Function() empty,
+  }) =>
       throw _privateConstructorUsedError;
-
-  /// Create a copy of GalleryViewState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $GalleryViewStateCopyWith<GalleryViewState> get copyWith =>
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String appBarTitle, String appBarSubtitle,
+            List<VideoPreviewViewState> videoPreviews, bool isLoading)?
+        data,
+    TResult? Function()? empty,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String appBarTitle, String appBarSubtitle,
+            List<VideoPreviewViewState> videoPreviews, bool isLoading)?
+        data,
+    TResult Function()? empty,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GalleryDataViewState value) data,
+    required TResult Function(GalleryEmptyViewState value) empty,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GalleryDataViewState value)? data,
+    TResult? Function(GalleryEmptyViewState value)? empty,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GalleryDataViewState value)? data,
+    TResult Function(GalleryEmptyViewState value)? empty,
+    required TResult orElse(),
+  }) =>
       throw _privateConstructorUsedError;
 }
 
@@ -33,11 +67,6 @@ abstract class $GalleryViewStateCopyWith<$Res> {
   factory $GalleryViewStateCopyWith(
           GalleryViewState value, $Res Function(GalleryViewState) then) =
       _$GalleryViewStateCopyWithImpl<$Res, GalleryViewState>;
-  @useResult
-  $Res call(
-      {String appBarTitle,
-      String appBarSubtitle,
-      List<VideoPreviewViewState> videoPreviews});
 }
 
 /// @nodoc
@@ -52,50 +81,27 @@ class _$GalleryViewStateCopyWithImpl<$Res, $Val extends GalleryViewState>
 
   /// Create a copy of GalleryViewState
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? appBarTitle = null,
-    Object? appBarSubtitle = null,
-    Object? videoPreviews = null,
-  }) {
-    return _then(_value.copyWith(
-      appBarTitle: null == appBarTitle
-          ? _value.appBarTitle
-          : appBarTitle // ignore: cast_nullable_to_non_nullable
-              as String,
-      appBarSubtitle: null == appBarSubtitle
-          ? _value.appBarSubtitle
-          : appBarSubtitle // ignore: cast_nullable_to_non_nullable
-              as String,
-      videoPreviews: null == videoPreviews
-          ? _value.videoPreviews
-          : videoPreviews // ignore: cast_nullable_to_non_nullable
-              as List<VideoPreviewViewState>,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$GalleryViewStateImplCopyWith<$Res>
-    implements $GalleryViewStateCopyWith<$Res> {
-  factory _$$GalleryViewStateImplCopyWith(_$GalleryViewStateImpl value,
-          $Res Function(_$GalleryViewStateImpl) then) =
-      __$$GalleryViewStateImplCopyWithImpl<$Res>;
-  @override
+abstract class _$$GalleryDataViewStateImplCopyWith<$Res> {
+  factory _$$GalleryDataViewStateImplCopyWith(_$GalleryDataViewStateImpl value,
+          $Res Function(_$GalleryDataViewStateImpl) then) =
+      __$$GalleryDataViewStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call(
       {String appBarTitle,
       String appBarSubtitle,
-      List<VideoPreviewViewState> videoPreviews});
+      List<VideoPreviewViewState> videoPreviews,
+      bool isLoading});
 }
 
 /// @nodoc
-class __$$GalleryViewStateImplCopyWithImpl<$Res>
-    extends _$GalleryViewStateCopyWithImpl<$Res, _$GalleryViewStateImpl>
-    implements _$$GalleryViewStateImplCopyWith<$Res> {
-  __$$GalleryViewStateImplCopyWithImpl(_$GalleryViewStateImpl _value,
-      $Res Function(_$GalleryViewStateImpl) _then)
+class __$$GalleryDataViewStateImplCopyWithImpl<$Res>
+    extends _$GalleryViewStateCopyWithImpl<$Res, _$GalleryDataViewStateImpl>
+    implements _$$GalleryDataViewStateImplCopyWith<$Res> {
+  __$$GalleryDataViewStateImplCopyWithImpl(_$GalleryDataViewStateImpl _value,
+      $Res Function(_$GalleryDataViewStateImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of GalleryViewState
@@ -106,8 +112,9 @@ class __$$GalleryViewStateImplCopyWithImpl<$Res>
     Object? appBarTitle = null,
     Object? appBarSubtitle = null,
     Object? videoPreviews = null,
+    Object? isLoading = null,
   }) {
-    return _then(_$GalleryViewStateImpl(
+    return _then(_$GalleryDataViewStateImpl(
       appBarTitle: null == appBarTitle
           ? _value.appBarTitle
           : appBarTitle // ignore: cast_nullable_to_non_nullable
@@ -120,17 +127,22 @@ class __$$GalleryViewStateImplCopyWithImpl<$Res>
           ? _value._videoPreviews
           : videoPreviews // ignore: cast_nullable_to_non_nullable
               as List<VideoPreviewViewState>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
 /// @nodoc
 
-class _$GalleryViewStateImpl implements _GalleryViewState {
-  const _$GalleryViewStateImpl(
+class _$GalleryDataViewStateImpl implements GalleryDataViewState {
+  const _$GalleryDataViewStateImpl(
       {required this.appBarTitle,
       required this.appBarSubtitle,
-      required final List<VideoPreviewViewState> videoPreviews})
+      required final List<VideoPreviewViewState> videoPreviews,
+      required this.isLoading})
       : _videoPreviews = videoPreviews;
 
   @override
@@ -146,55 +158,239 @@ class _$GalleryViewStateImpl implements _GalleryViewState {
   }
 
   @override
+  final bool isLoading;
+
+  @override
   String toString() {
-    return 'GalleryViewState(appBarTitle: $appBarTitle, appBarSubtitle: $appBarSubtitle, videoPreviews: $videoPreviews)';
+    return 'GalleryViewState.data(appBarTitle: $appBarTitle, appBarSubtitle: $appBarSubtitle, videoPreviews: $videoPreviews, isLoading: $isLoading)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GalleryViewStateImpl &&
+            other is _$GalleryDataViewStateImpl &&
             (identical(other.appBarTitle, appBarTitle) ||
                 other.appBarTitle == appBarTitle) &&
             (identical(other.appBarSubtitle, appBarSubtitle) ||
                 other.appBarSubtitle == appBarSubtitle) &&
             const DeepCollectionEquality()
-                .equals(other._videoPreviews, _videoPreviews));
+                .equals(other._videoPreviews, _videoPreviews) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, appBarTitle, appBarSubtitle,
-      const DeepCollectionEquality().hash(_videoPreviews));
+      const DeepCollectionEquality().hash(_videoPreviews), isLoading);
 
   /// Create a copy of GalleryViewState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$GalleryViewStateImplCopyWith<_$GalleryViewStateImpl> get copyWith =>
-      __$$GalleryViewStateImplCopyWithImpl<_$GalleryViewStateImpl>(
-          this, _$identity);
+  _$$GalleryDataViewStateImplCopyWith<_$GalleryDataViewStateImpl>
+      get copyWith =>
+          __$$GalleryDataViewStateImplCopyWithImpl<_$GalleryDataViewStateImpl>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String appBarTitle, String appBarSubtitle,
+            List<VideoPreviewViewState> videoPreviews, bool isLoading)
+        data,
+    required TResult Function() empty,
+  }) {
+    return data(appBarTitle, appBarSubtitle, videoPreviews, isLoading);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String appBarTitle, String appBarSubtitle,
+            List<VideoPreviewViewState> videoPreviews, bool isLoading)?
+        data,
+    TResult? Function()? empty,
+  }) {
+    return data?.call(appBarTitle, appBarSubtitle, videoPreviews, isLoading);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String appBarTitle, String appBarSubtitle,
+            List<VideoPreviewViewState> videoPreviews, bool isLoading)?
+        data,
+    TResult Function()? empty,
+    required TResult orElse(),
+  }) {
+    if (data != null) {
+      return data(appBarTitle, appBarSubtitle, videoPreviews, isLoading);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GalleryDataViewState value) data,
+    required TResult Function(GalleryEmptyViewState value) empty,
+  }) {
+    return data(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GalleryDataViewState value)? data,
+    TResult? Function(GalleryEmptyViewState value)? empty,
+  }) {
+    return data?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GalleryDataViewState value)? data,
+    TResult Function(GalleryEmptyViewState value)? empty,
+    required TResult orElse(),
+  }) {
+    if (data != null) {
+      return data(this);
+    }
+    return orElse();
+  }
 }
 
-abstract class _GalleryViewState implements GalleryViewState {
-  const factory _GalleryViewState(
-          {required final String appBarTitle,
-          required final String appBarSubtitle,
-          required final List<VideoPreviewViewState> videoPreviews}) =
-      _$GalleryViewStateImpl;
+abstract class GalleryDataViewState implements GalleryViewState {
+  const factory GalleryDataViewState(
+      {required final String appBarTitle,
+      required final String appBarSubtitle,
+      required final List<VideoPreviewViewState> videoPreviews,
+      required final bool isLoading}) = _$GalleryDataViewStateImpl;
 
-  @override
   String get appBarTitle;
-  @override
   String get appBarSubtitle;
-  @override
   List<VideoPreviewViewState> get videoPreviews;
+  bool get isLoading;
 
   /// Create a copy of GalleryViewState
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$GalleryViewStateImplCopyWith<_$GalleryViewStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$GalleryDataViewStateImplCopyWith<_$GalleryDataViewStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$GalleryEmptyViewStateImplCopyWith<$Res> {
+  factory _$$GalleryEmptyViewStateImplCopyWith(
+          _$GalleryEmptyViewStateImpl value,
+          $Res Function(_$GalleryEmptyViewStateImpl) then) =
+      __$$GalleryEmptyViewStateImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$GalleryEmptyViewStateImplCopyWithImpl<$Res>
+    extends _$GalleryViewStateCopyWithImpl<$Res, _$GalleryEmptyViewStateImpl>
+    implements _$$GalleryEmptyViewStateImplCopyWith<$Res> {
+  __$$GalleryEmptyViewStateImplCopyWithImpl(_$GalleryEmptyViewStateImpl _value,
+      $Res Function(_$GalleryEmptyViewStateImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of GalleryViewState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$GalleryEmptyViewStateImpl implements GalleryEmptyViewState {
+  const _$GalleryEmptyViewStateImpl();
+
+  @override
+  String toString() {
+    return 'GalleryViewState.empty()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GalleryEmptyViewStateImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String appBarTitle, String appBarSubtitle,
+            List<VideoPreviewViewState> videoPreviews, bool isLoading)
+        data,
+    required TResult Function() empty,
+  }) {
+    return empty();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String appBarTitle, String appBarSubtitle,
+            List<VideoPreviewViewState> videoPreviews, bool isLoading)?
+        data,
+    TResult? Function()? empty,
+  }) {
+    return empty?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String appBarTitle, String appBarSubtitle,
+            List<VideoPreviewViewState> videoPreviews, bool isLoading)?
+        data,
+    TResult Function()? empty,
+    required TResult orElse(),
+  }) {
+    if (empty != null) {
+      return empty();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GalleryDataViewState value) data,
+    required TResult Function(GalleryEmptyViewState value) empty,
+  }) {
+    return empty(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(GalleryDataViewState value)? data,
+    TResult? Function(GalleryEmptyViewState value)? empty,
+  }) {
+    return empty?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GalleryDataViewState value)? data,
+    TResult Function(GalleryEmptyViewState value)? empty,
+    required TResult orElse(),
+  }) {
+    if (empty != null) {
+      return empty(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class GalleryEmptyViewState implements GalleryViewState {
+  const factory GalleryEmptyViewState() = _$GalleryEmptyViewStateImpl;
 }

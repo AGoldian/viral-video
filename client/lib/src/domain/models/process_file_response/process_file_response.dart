@@ -8,6 +8,7 @@ part 'process_file_response.g.dart';
 @freezed
 class ProcessFileResponse with _$ProcessFileResponse {
   const factory ProcessFileResponse({
+    required String videoName,
     required List<VideoClip> clips,
   }) = _ProcessFileResponse;
 

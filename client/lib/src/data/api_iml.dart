@@ -1,7 +1,6 @@
 import 'package:cross_file/cross_file.dart';
 import 'package:dio/dio.dart';
 import 'package:viral_video_client/src/data/api.dart';
-import 'package:viral_video_client/src/domain/models/process_file_request/process_file_request.dart';
 import 'package:viral_video_client/src/domain/models/process_file_response/process_file_response.dart';
 
 const _base = 'http://127.0.0.1:8000';
@@ -14,9 +13,11 @@ class ApiImp implements Api {
   }) : _dio = dio;
 
   @override
-  Future<ProcessFileResponse> processFile(ProcessFileRequest request) async {
-    final response =
-        await _dio.post<Map<String, dynamic>>('$_base/process_file');
+  Future<ProcessFileResponse> processFile(String path) async {
+    final response = await _dio.post<Map<String, dynamic>>(
+      '$_base/process_file',
+      data: {'path': path},
+    );
 
     return ProcessFileResponse.fromJson(response.data!);
   }
@@ -35,5 +36,11 @@ class ApiImp implements Api {
     );
 
     return response.data!['filePath'];
+  }
+
+  @override
+  Future<ProcessFileResponse> poll(String path) {
+    // TODO: implement poll
+    throw UnimplementedError();
   }
 }

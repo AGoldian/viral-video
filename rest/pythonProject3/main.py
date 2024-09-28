@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 import uuid
+import time
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -19,6 +20,27 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.post('/process_file')
+async def process_file(request: Request):
+    json = await request.json()
+
+    file_name = json['path']
+
+    time.sleep(10)
+
+    return JSONResponse(content={
+        'videoName': file_name,
+        'clips': [
+            {
+                'from': '00:40',
+                'to': '00:50',
+                'reasons': ['Очень крутой момент'],
+                'fileLink': 'test_video.MP4',
+            }
+        ]
+    })
 
 
 @app.post("/load_file")
@@ -38,6 +60,11 @@ async def analyze_image(request: Request):
 
 
 @app.options("/load_file")
+async def analyze_image_options():
+    return JSONResponse(content={})
+
+
+@app.options("/process_file")
 async def analyze_image_options():
     return JSONResponse(content={})
 

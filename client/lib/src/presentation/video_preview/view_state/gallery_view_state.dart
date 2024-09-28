@@ -5,9 +5,12 @@ part 'gallery_view_state.freezed.dart';
 
 @freezed
 class GalleryViewState with _$GalleryViewState {
-  const factory GalleryViewState({
+  const factory GalleryViewState.data({
     required String appBarTitle,
     required String appBarSubtitle,
     required List<VideoPreviewViewState> videoPreviews,
-  }) = _GalleryViewState;
+    required bool isLoading,
+  }) = GalleryDataViewState;
+
+  const factory GalleryViewState.empty() = GalleryEmptyViewState;
 }
