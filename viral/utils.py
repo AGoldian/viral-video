@@ -36,7 +36,7 @@ def get_file_size_mb(file_path):
 
 
 # Функция для нарезки видео на части по 150 МБ
-def split_video(fname, video_path, max_size_mb=10):
+def split_video(fname, video_path, max_size_mb=30):
     video_size_mb = get_file_size_mb(video_path)
     if video_size_mb <= max_size_mb:
         return [video_path]  # Если видео меньше 150 МБ, не нарезаем
