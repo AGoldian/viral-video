@@ -1,7 +1,6 @@
 import 'package:cross_file/cross_file.dart';
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:viral_video_client/src/service/repository/video_repository.dart';
 import 'package:file_picker/file_picker.dart';
 

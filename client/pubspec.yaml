@@ -17,6 +17,7 @@ dependencies:
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0
   cross_file: ^0.3.4+2
+  flutter_riverpod: ^2.5.1
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:viral_video_client/src/common/state_notifier_widget.dart';
 import 'package:viral_video_client/src/presentation/pick_video/pick_video_view_model.dart';
 
 import '../common/pretty_button.dart';
@@ -14,63 +15,80 @@ class PickVideoView extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          width: double.infinity,
-          height: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Expanded(child: SizedBox()),
-              const Text(
-                'Крутейший конвертер вашего видео',
-                style: AppTextTheme.h1,
-              ),
-              const Text(
-                'в виральные клипы',
-                style: AppTextTheme.body2,
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              const Text(
-                'Уникальное решение основанное на отечественных технологиях\n' // мб добавить \u{00A0} в нужных местах
-                'позволит вырезать захватывающие клипы из самых длинных видео\n'
-                'и наложить текст, для последующей публикации',
-                textAlign: TextAlign.center,
-              ),
-              const Expanded(child: SizedBox()),
-              Wrap(
-                spacing: 16,
-                runSpacing: 16,
-                alignment: WrapAlignment.center,
-                runAlignment: WrapAlignment.center,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxWidth: 500,
+  Widget build(BuildContext context) => StateNotifierWidget(
+        notifier: viewModel,
+        dataBuilder: (context, state) => Scaffold(
+          body: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            width: double.infinity,
+            height: double.infinity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Expanded(child: SizedBox()),
+                const Text(
+                  'Крутейший конвертер вашего видео',
+                  style: AppTextTheme.h1,
+                ),
+                const Text(
+                  'в виральные клипы',
+                  style: AppTextTheme.body2,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                const Text(
+                  'Уникальное решение основанное на отечественных технологиях\n' // мб добавить \u{00A0} в нужных местах
+                  'позволит вырезать захватывающие клипы из самых длинных видео\n'
+                  'и наложить текст, для последующей публикации',
+                  textAlign: TextAlign.center,
+                ),
+                const Expanded(child: SizedBox()),
+                Wrap(
+                  spacing: 16,
+                  runSpacing: 16,
+                  alignment: WrapAlignment.center,
+                  runAlignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        maxWidth: 500,
+                      ),
+                      child: _InputWidget(
+                        onSubmit: viewModel.onSubmit,
+                        enabled: !state.isLoading,
+                      ),
                     ),
-                    child: _InputWidget(
-                      onSubmit: viewModel.onSubmit,
+                    const Text(
+                      'или',
                     ),
+                    PrettyButton.secondary(
+                      text: 'Загрузить видео',
+                      enabled: !state.isLoading,
+                      onTap: () => viewModel.onPickFile(),
+                    ),
+                  ],
+                ),
+                if (state.isLoading)
+                  Container(
+                    margin: const EdgeInsets.only(top: 32, bottom: 16),
+                    height: 64,
+                    width: 64,
+                    child: const CircularProgressIndicator(),
                   ),
-                  const Text(
-                    'или',
+                if (state.processDescription != null)
+                  Text(
+                    state.processDescription!,
+                    style: AppTextTheme.body2,
                   ),
-                  PrettyButton.secondary(
-                    text: 'Загрузить видео',
-                    onTap: () => viewModel.onPickFile(),
-                  ),
-                ],
-              ),
-              const Expanded(
-                flex: 3,
-                child: SizedBox(),
-              ),
-            ],
+                const Expanded(
+                  flex: 3,
+                  child: SizedBox(),
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -78,8 +96,12 @@ class PickVideoView extends StatelessWidget {
 
 class _InputWidget extends StatefulWidget {
   final void Function(String) onSubmit;
+  final bool enabled;
 
-  const _InputWidget({required this.onSubmit});
+  const _InputWidget({
+    required this.onSubmit,
+    required this.enabled,
+  });
 
   @override
   createState() => _InputWidgetState();
@@ -103,6 +125,7 @@ class _InputWidgetState extends State<_InputWidget> {
   @override
   Widget build(BuildContext context) => TextField(
         controller: textEditingController,
+        enabled: widget.enabled,
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderSide: const BorderSide(
@@ -122,7 +145,7 @@ class _InputWidgetState extends State<_InputWidget> {
           hintText: 'Вставьте сюда ссылку на RuTube',
           suffixIcon: PrettyButton.action(
             text: 'Создать клипы',
-            enabled: textEditingController.text.isNotEmpty,
+            enabled: textEditingController.text.isNotEmpty && widget.enabled,
             padding: const EdgeInsets.all(8),
             onTap: () => widget.onSubmit(
               textEditingController.text,
