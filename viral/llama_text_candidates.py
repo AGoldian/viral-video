@@ -53,8 +53,6 @@ def video_to_text(video_name, is_whisper=False):
     return lines
 
 def text_to_timestamps(text, model, processor):
-
-    # generate answer
     prompt_answer = f"""
     <|startoftext|><|start_header_id|>user<|end_header_id|>
     Ты являешься экспертом по выявлению вирусного контента из транскриптов видео. Я предоставлю фрагмент разговора, и твоя задача — определить самые увлекательные отрезки длиной 10-30 секунд, которые имеют наибольший потенциал стать вирусными. Твой анализ должен основываться на следующих ключевых элементах вирусного контента:
@@ -126,42 +124,50 @@ def text_to_timestamps(text, model, processor):
     return output_result
 
 
-# Example usage
-video_name = "0c6e4cdaa192d1ae58b99bc9f35891b9"
-model_dir="/tmp/llama-3.2-transformers-3b-instruct-v1"
-
-
-print("OK")
-model = AutoModelForCausalLM.from_pretrained(
-    model_dir,
-    torch_dtype="auto",
-    device_map="auto",
-    local_files_only=True  # Ensure the model is loaded from local files
-)
-
-# Load the tokenizer from the local path
-processor = AutoProcessor.from_pretrained(
-    model_dir,
-    local_files_only=True  # Ensure processor is loaded from local files
-)
-
-
-text_excerpt = video_to_text(video_name, False)
-window_size = 100
-print(len(text_excerpt))
-candidates = []
-if len(text_excerpt) > 0:
-    for i in range(10, len(text_excerpt) - window_size - 1, window_size):
-        text = ''.join(text_excerpt[i:i+window_size])
-        print("OK")
-
-        timestamps = text_to_timestamps(text, model, processor)
-
-        candidates.append(timestamps)
-        print(timestamps)
-        print('--------------------------------------')
-
-    with open(f"/result/{video_name}.txt", "w") as f:
-        f.write(str(candidates))
-        print("OK")
+def main(video_name: str, model_dir: str):
+    print("OK")
+    
+    # Load the model from local files
+    model = AutoModelForCausalLM.from_pretrained(
+        model_dir,
+        torch_dtype="auto",
+        device_map="auto",
+        local_files_only=True  # Ensure the model is loaded from local files
+    )
+    
+    # Load the processor from local files
+    processor = AutoProcessor.from_pretrained(
+        model_dir,
+        local_files_only=True  # Ensure processor is loaded from local files
+    )
+    
+    # Extract text from the video (assuming `video_to_text` is defined elsewhere)
+    text_excerpt = video_to_text(video_name, False)
+    window_size = 100
+    print(len(text_excerpt))
+    
+    candidates = []
+    if len(text_excerpt) > 0:
+        for i in range(10, len(text_excerpt) - window_size - 1, window_size):
+            text = ''.join(text_excerpt[i:i+window_size])
+            print("OK")
+            
+            # Convert text to timestamps (assuming `text_to_timestamps` is defined elsewhere)
+            timestamps = text_to_timestamps(text, model, processor)
+            
+            candidates.append(timestamps)
+            print(timestamps)
+            print('--------------------------------------')
+    
+        # Write the results to a file
+        with open(f"/result/{video_name}.txt", "w") as f:
+            f.write(str(candidates))
+            print("OK")
+    
     print("end")
+
+
+if __name__ == "__main__":
+    video_input = "0c6e4cdaa192d1ae58b99bc9f35891b9"
+    model_directory = "/tmp/llama-3.2-transformers-3b-instruct-v1"
+    main(video_input, model_directory)
