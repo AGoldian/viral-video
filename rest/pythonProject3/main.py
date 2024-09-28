@@ -1,3 +1,5 @@
+import os
+
 import uvicorn
 import aiofiles
 from fastapi import FastAPI, Request
@@ -5,7 +7,7 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 import uuid
-import time
+import asyncio
 
 from starlette.responses import FileResponse
 
@@ -28,41 +30,61 @@ app.add_middleware(
 async def process_file(request: Request):
     json = await request.json()
 
-    file_name = json['path']
+    path = json['path']
 
-    time.sleep(10)
+    await asyncio.sleep(15)
     # TODO: goldian прикрутить модель
 
     return JSONResponse(content={
-        'videoName': file_name,
-        'clips': [
-            {
-                'from': '00:40',
-                'to': '00:50',
-                'reasons': ['Очень крутой момент'],
-                'fileLink': 'test_video.MP4',
-            }
-        ]
+        'videoName': path,
+        'clips': _load_clips_from_dir(path)
     })
 
 
-@app.get('/files/{path}')
-async def load_file(path: str):
-    return FileResponse(path)
+@app.get('/poll_directory/{directory}')
+async def poll_directory(directory: str):
+    return JSONResponse(content={
+        'videoName': directory,
+        'clips': _load_clips_from_dir(directory)
+    })
+
+
+def _load_clips_from_dir(path):
+    directory = os.fsencode(path)
+
+    clips = []
+
+    for file in os.listdir(directory):
+        filename = os.fsdecode(file)
+        if filename.lower().endswith(".mp4"):
+            clips.append({
+                'from': '00:40',
+                'to': '00:50',
+                'reasons': ['Очень крутой момент'],
+                'fileLink': f'{path}/{filename}'
+            })
+    return clips
+
+
+@app.get('/files/{path}/{file}')
+async def load_file(path: str, file: str):
+    return FileResponse(f'{path}/{file}')
 
 
 @app.post("/load_file")
-async def analyze_image(request: Request):
+async def save_image_local(request: Request):
     form_data = await request.body()
 
-    out_file_path = f'{uuid.uuid4()}.MP4'
+    out_file_folder = f'{uuid.uuid4()}'
+    if not os.path.exists(out_file_folder):
+        os.makedirs(out_file_folder)
 
-    async with aiofiles.open(out_file_path, 'wb') as out_file:
+    async with aiofiles.open(f'{out_file_folder}/initial.MP4', 'wb') as out_file:
         await out_file.write(form_data)  # async write
 
     return JSONResponse(
         content={
-            'filePath': out_file_path
+            'filePath': out_file_folder
         }
     )
 
@@ -77,7 +99,12 @@ async def analyze_image_options():
     return JSONResponse(content={})
 
 
-@app.options('/files/{path}')
+@app.options('/files/{path}/{file}')
+async def analyze_image_options():
+    return JSONResponse(content={})
+
+
+@app.options('/poll_directory/{directory}')
 async def analyze_image_options():
     return JSONResponse(content={})
 

@@ -12,7 +12,7 @@ class PickVideoViewModel extends StateNotifier<PickVideoViewState> {
   final VideoRepository _localRepo, _webRepo;
   final NavigationManager _navigationManager;
   final VideoPreviewGalleryViewModel _galleryViewModel;
-  late final Timer _pollingTimer;
+  late Timer _pollingTimer;
   var _timerTicks = 0;
 
   PickVideoViewModel({
@@ -63,15 +63,17 @@ class PickVideoViewModel extends StateNotifier<PickVideoViewState> {
           _navigationManager.openVideoPreviewGallery();
         }
         _timerTicks += 1;
-        // TODO: poll until result is not completed
-        // final response = await _api.poll(ProcessFileRequest(path: path));
-        // _galleryViewModel.updateDataWithNewModel(response, true);
+        print('timer ticks: $_timerTicks');
+        final response = await _api.poll(path);
+        _galleryViewModel.updateDataWithNewModel(response, true);
       },
     );
 
     final model = await _api.processFile(
       path,
     );
+
+    _pollingTimer.cancel();
 
     _galleryViewModel.updateDataWithNewModel(model);
 

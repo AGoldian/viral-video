@@ -43,6 +43,19 @@ class VideoPreviewGalleryViewModel extends StateNotifier<GalleryViewState> {
         videoPreviews: previews,
         isLoading: loading,
       );
+    } else {
+      final dataOrNull = state.map(
+        data: (data) => data,
+        empty: (_) => null,
+      );
+
+      if (dataOrNull == null) {
+        return;
+      }
+
+      state = dataOrNull.copyWith(
+        isLoading: loading,
+      );
     }
   }
 

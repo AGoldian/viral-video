@@ -39,9 +39,12 @@ class ApiImp implements Api {
   }
 
   @override
-  Future<ProcessFileResponse> poll(String path) {
-    // TODO: implement poll
-    throw UnimplementedError();
+  Future<ProcessFileResponse> poll(String path) async {
+    final response = await _dio.get<Map<String, dynamic>>(
+      '$_base/poll_directory/$path',
+    );
+
+    return ProcessFileResponse.fromJson(response.data!);
   }
 
   @override
