@@ -1,3 +1,5 @@
+
+import json
 import moviepy.editor as mp
 import librosa
 import numpy as np
@@ -56,7 +58,6 @@ def remove_overlapping_intervals(sorted_heuristics):
 
     return non_overlapping_intervals
 
-import json
 
 def seconds_to_time_format(seconds):
     """
@@ -89,8 +90,46 @@ def generate_audio_highlights_from_intervals(final_intervals):
     
     return json.dumps(highlights, indent=4, ensure_ascii=False)
 
-def create_json_of_audio_momets(video_path,WINDOW_SIZE_IN_SECS,NUM_CANDIDATES)
+def get_json_of_audio_moments(video_path, WINDOW_SIZE_IN_SECS, NUM_CANDIDATES, audio_output_path):
+    """
+    Извлекает аудио из видео, анализирует его, и возвращает JSON с выделенными аудио моментами.
 
+    Аргументы:
+    video_path (str): Путь до видеофайла.
+    window_size_in_secs (int): Размер окна в секундах для анализа аудио.
+    num_candidates (int): Количество лучших выделенных аудио моментов для возврата.
+
+    Возвращает:
+    list: JSON-список с выделенными аудио моментами.
+    Ожидаемый формат выходного JSON:
+    [
+        {
+            "time_start": "16:34",
+            "time_end": "16:39",
+            "reason": "Audio Highlights"
+        },
+        {
+            "time_start": "30:12",
+            "time_end": "30:17",
+            "reason": "Audio Highlights"
+        },
+        {
+            "time_start": "42:16",
+            "time_end": "42:21",
+            "reason": "Audio Highlights"
+        },
+        {
+            "time_start": "59:26",
+            "time_end": "59:31",
+            "reason": "Audio Highlights"
+        },
+        {
+            "time_start": "62:43",
+            "time_end": "62:48",
+            "reason": "Audio Highlights"
+        }
+    ]
+    """
     extract_audio(video_path, audio_output_path)
 
     audio, sr = load_audio(audio_output_path)
@@ -104,11 +143,19 @@ def create_json_of_audio_momets(video_path,WINDOW_SIZE_IN_SECS,NUM_CANDIDATES)
     return generate_audio_highlights_from_intervals(final_intervals[:NUM_CANDIDATES])
 
 
-NUM_CANDIDATES = 5
-WINDOW_SIZE_IN_SECS = 5
 
-audio_output_path = "extracted_audio.wav" #'это можно не трогать'
+def main():
+    """
+    Основная функция для запуска обработки видео и генерации JSON с аудио моментами.
+    """
+    video_path = 'path/to/your/video.mp4'  # Укажите путь до вашего видеофайла
+    window_size_in_secs = 5
+    num_candidates = 5
+    audio_output_path = "extracted_audio.wav"  # Путь для извлеченного аудио
 
-video_path = '' #задать
+    # Создаем JSON с аудио моментами
+    audio_highlights_json = get_json_of_audio_moments(video_path, window_size_in_secs, num_candidates, audio_output_path)
+    print(audio_highlights_json)
 
-create_json_of_audio_momets(video_path,WINDOW_SIZE_IN_SECS,NUM_CANDIDATES)
+if __name__ == "__main__":
+    main()
