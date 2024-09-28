@@ -1,7 +1,7 @@
 # Whisper config
 
 # WHISPER_MODEL = 'base'
-WHISPER_MODEL = '/Users/s.vandanov/Desktop/viral-video/weights/medium.pt'
+WHISPER_MODEL = './weights/medium.pt'
 
 # R2 config
 R2_SCRIPT_PATH = './R2-Tuning/tools/inference.py'
@@ -17,7 +17,8 @@ AUDIO_OUTPUT_PATH = "extracted_audio.wav"  # Путь для извлеченн�
 
 # LLama config
     
-LLAMA_MODEL_DIRECTORY = "/tmp/llama-3.2-transformers-3b-instruct-v1"
+# LLAMA_MODEL_DIRECTORY = "/tmp/llama-3.2-transformers-3b-instruct-v1"
+LLAMA_MODEL_DIRECTORY = "/tmp/llama-3.1-transformers-8b-instruct-v2"
 
 LLAMA_BASE_PROMPT = """
     <|startoftext|><|start_header_id|>user<|end_header_id|>
