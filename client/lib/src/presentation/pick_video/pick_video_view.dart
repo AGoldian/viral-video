@@ -43,6 +43,7 @@ class PickVideoView extends StatelessWidget {
                   'позволит вырезать захватывающие клипы из самых длинных видео\n'
                   'и наложить текст, для последующей публикации',
                   textAlign: TextAlign.center,
+                  style: AppTextTheme.caption1,
                 ),
                 const Expanded(child: SizedBox()),
                 Wrap(

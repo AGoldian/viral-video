@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:viral_video_client/src/common/state_notifier_widget.dart';
 import 'package:viral_video_client/src/presentation/theme/app_text_theme.dart';
+import 'package:viral_video_client/src/presentation/theme/color_theme.dart';
 import 'package:viral_video_client/src/presentation/video_preview/video_preview_gallery_view_model.dart';
 import 'package:viral_video_client/src/presentation/video_preview/view_state/video_preview_view_state.dart';
 
@@ -35,8 +36,16 @@ class _VideoPreviewGallery extends State<VideoPreviewGallery> {
                 title: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(state.appBarTitle),
-                    Text(state.appBarSubtitle),
+                    Text(
+                      state.appBarTitle,
+                      style: AppTextTheme.h1,
+                    ),
+                    Text(
+                      'уникальный идентификатор вашего клипа',
+                      style: AppTextTheme.body2.copyWith(
+                        color: ColorTheme.textMinor,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -61,8 +70,26 @@ class _VideoPreviewGallery extends State<VideoPreviewGallery> {
                             child: SizedBox(
                               width: 32,
                               height: 32,
-                              child: Center(
-                                child: CircularProgressIndicator(),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    'Обработка видео еще не заверешена',
+                                    style: AppTextTheme.body2,
+                                  ),
+                                  Text(
+                                    'новые клипы появятся тут сразу после обработки',
+                                    style: AppTextTheme.caption1,
+                                  ),
+                                ],
                               ),
                             ),
                           ),

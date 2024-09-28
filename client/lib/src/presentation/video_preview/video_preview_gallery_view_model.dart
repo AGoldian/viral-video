@@ -4,6 +4,7 @@ import 'package:viral_video_client/src/data/api.dart';
 import 'package:viral_video_client/src/navigation/navigation_manager.dart';
 import 'package:viral_video_client/src/presentation/video_preview/view_state/gallery_view_state.dart';
 import 'package:viral_video_client/src/presentation/video_preview/view_state/video_preview_view_state.dart';
+import 'package:viral_video_client/src/service/utils.dart';
 
 import '../../domain/models/process_file_response/process_file_response.dart';
 
@@ -26,20 +27,22 @@ class VideoPreviewGalleryViewModel extends StateNotifier<GalleryViewState> {
       [bool loading = false]) async {
     if (model.clips.isNotEmpty) {
       final List<VideoPreviewViewState> previews = [];
+      var i = 1;
       for (final clip in model.clips) {
         final video = await _api.getFile(clip.fileLink);
         previews.add(
           VideoPreviewViewState(
-            title: 'title',
-            duration: const Duration(seconds: 10),
+            title: 'Клип #$i',
+            duration: parseDuration(clip.to) - parseDuration(clip.from),
             video: video,
+            comment: clip.reasons.join('\n'),
           ),
         );
+        i += 1;
       }
 
       state = GalleryViewState.data(
         appBarTitle: model.videoName,
-        appBarSubtitle: 'тут еще что-то напишем',
         videoPreviews: previews,
         isLoading: loading,
       );

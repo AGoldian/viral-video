@@ -32,8 +32,8 @@ async def process_file(request: Request):
 
     path = json['path']
 
-    await asyncio.sleep(15)
-    # TODO: goldian прикрутить модель
+    await asyncio.sleep(120)
+    # TODO: goldian прикрутить модель на распознавание
 
     return JSONResponse(content={
         'videoName': path,
@@ -57,10 +57,11 @@ def _load_clips_from_dir(path):
     for file in os.listdir(directory):
         filename = os.fsdecode(file)
         if filename.lower().endswith(".mp4"):
+            # TODO: goldian прикрутить хранилище инфы о видосах
             clips.append({
                 'from': '00:40',
                 'to': '00:50',
-                'reasons': ['Очень крутой момент'],
+                'reason': 'Очень крутой момент',
                 'fileLink': f'{path}/{filename}'
             })
     return clips

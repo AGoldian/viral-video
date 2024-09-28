@@ -8,7 +8,7 @@ class VideoClip with _$VideoClip {
   const factory VideoClip({
     required String from,
     required String to,
-    required List<String> reasons,
+    required String reason,
     required String fileLink,
   }) = _VideoClip;
 

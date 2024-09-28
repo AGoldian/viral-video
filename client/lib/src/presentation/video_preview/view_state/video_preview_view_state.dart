@@ -9,6 +9,7 @@ class VideoPreviewViewState with _$VideoPreviewViewState {
     required String title,
     required Duration duration,
     required XFile video,
+    required String comment,
   }) = _VideoPreviewViewState;
 }
 

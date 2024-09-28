@@ -7,7 +7,6 @@ part 'gallery_view_state.freezed.dart';
 class GalleryViewState with _$GalleryViewState {
   const factory GalleryViewState.data({
     required String appBarTitle,
-    required String appBarSubtitle,
     required List<VideoPreviewViewState> videoPreviews,
     required bool isLoading,
     int? previewIndex,

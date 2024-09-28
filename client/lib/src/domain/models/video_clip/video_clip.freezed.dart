@@ -22,7 +22,7 @@ VideoClip _$VideoClipFromJson(Map<String, dynamic> json) {
 mixin _$VideoClip {
   String get from => throw _privateConstructorUsedError;
   String get to => throw _privateConstructorUsedError;
-  List<String> get reasons => throw _privateConstructorUsedError;
+  String get reason => throw _privateConstructorUsedError;
   String get fileLink => throw _privateConstructorUsedError;
 
   /// Serializes this VideoClip to a JSON map.
@@ -40,7 +40,7 @@ abstract class $VideoClipCopyWith<$Res> {
   factory $VideoClipCopyWith(VideoClip value, $Res Function(VideoClip) then) =
       _$VideoClipCopyWithImpl<$Res, VideoClip>;
   @useResult
-  $Res call({String from, String to, List<String> reasons, String fileLink});
+  $Res call({String from, String to, String reason, String fileLink});
 }
 
 /// @nodoc
@@ -60,7 +60,7 @@ class _$VideoClipCopyWithImpl<$Res, $Val extends VideoClip>
   $Res call({
     Object? from = null,
     Object? to = null,
-    Object? reasons = null,
+    Object? reason = null,
     Object? fileLink = null,
   }) {
     return _then(_value.copyWith(
@@ -72,10 +72,10 @@ class _$VideoClipCopyWithImpl<$Res, $Val extends VideoClip>
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
               as String,
-      reasons: null == reasons
-          ? _value.reasons
-          : reasons // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      reason: null == reason
+          ? _value.reason
+          : reason // ignore: cast_nullable_to_non_nullable
+              as String,
       fileLink: null == fileLink
           ? _value.fileLink
           : fileLink // ignore: cast_nullable_to_non_nullable
@@ -92,7 +92,7 @@ abstract class _$$VideoClipImplCopyWith<$Res>
       __$$VideoClipImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String from, String to, List<String> reasons, String fileLink});
+  $Res call({String from, String to, String reason, String fileLink});
 }
 
 /// @nodoc
@@ -110,7 +110,7 @@ class __$$VideoClipImplCopyWithImpl<$Res>
   $Res call({
     Object? from = null,
     Object? to = null,
-    Object? reasons = null,
+    Object? reason = null,
     Object? fileLink = null,
   }) {
     return _then(_$VideoClipImpl(
@@ -122,10 +122,10 @@ class __$$VideoClipImplCopyWithImpl<$Res>
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
               as String,
-      reasons: null == reasons
-          ? _value._reasons
-          : reasons // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      reason: null == reason
+          ? _value.reason
+          : reason // ignore: cast_nullable_to_non_nullable
+              as String,
       fileLink: null == fileLink
           ? _value.fileLink
           : fileLink // ignore: cast_nullable_to_non_nullable
@@ -140,9 +140,8 @@ class _$VideoClipImpl implements _VideoClip {
   const _$VideoClipImpl(
       {required this.from,
       required this.to,
-      required final List<String> reasons,
-      required this.fileLink})
-      : _reasons = reasons;
+      required this.reason,
+      required this.fileLink});
 
   factory _$VideoClipImpl.fromJson(Map<String, dynamic> json) =>
       _$$VideoClipImplFromJson(json);
@@ -151,20 +150,14 @@ class _$VideoClipImpl implements _VideoClip {
   final String from;
   @override
   final String to;
-  final List<String> _reasons;
   @override
-  List<String> get reasons {
-    if (_reasons is EqualUnmodifiableListView) return _reasons;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_reasons);
-  }
-
+  final String reason;
   @override
   final String fileLink;
 
   @override
   String toString() {
-    return 'VideoClip(from: $from, to: $to, reasons: $reasons, fileLink: $fileLink)';
+    return 'VideoClip(from: $from, to: $to, reason: $reason, fileLink: $fileLink)';
   }
 
   @override
@@ -174,15 +167,14 @@ class _$VideoClipImpl implements _VideoClip {
             other is _$VideoClipImpl &&
             (identical(other.from, from) || other.from == from) &&
             (identical(other.to, to) || other.to == to) &&
-            const DeepCollectionEquality().equals(other._reasons, _reasons) &&
+            (identical(other.reason, reason) || other.reason == reason) &&
             (identical(other.fileLink, fileLink) ||
                 other.fileLink == fileLink));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, from, to,
-      const DeepCollectionEquality().hash(_reasons), fileLink);
+  int get hashCode => Object.hash(runtimeType, from, to, reason, fileLink);
 
   /// Create a copy of VideoClip
   /// with the given fields replaced by the non-null parameter values.
@@ -204,7 +196,7 @@ abstract class _VideoClip implements VideoClip {
   const factory _VideoClip(
       {required final String from,
       required final String to,
-      required final List<String> reasons,
+      required final String reason,
       required final String fileLink}) = _$VideoClipImpl;
 
   factory _VideoClip.fromJson(Map<String, dynamic> json) =
@@ -215,7 +207,7 @@ abstract class _VideoClip implements VideoClip {
   @override
   String get to;
   @override
-  List<String> get reasons;
+  String get reason;
   @override
   String get fileLink;
 

@@ -19,6 +19,7 @@ mixin _$VideoPreviewViewState {
   String get title => throw _privateConstructorUsedError;
   Duration get duration => throw _privateConstructorUsedError;
   XFile get video => throw _privateConstructorUsedError;
+  String get comment => throw _privateConstructorUsedError;
 
   /// Create a copy of VideoPreviewViewState
   /// with the given fields replaced by the non-null parameter values.
@@ -33,7 +34,7 @@ abstract class $VideoPreviewViewStateCopyWith<$Res> {
           $Res Function(VideoPreviewViewState) then) =
       _$VideoPreviewViewStateCopyWithImpl<$Res, VideoPreviewViewState>;
   @useResult
-  $Res call({String title, Duration duration, XFile video});
+  $Res call({String title, Duration duration, XFile video, String comment});
 }
 
 /// @nodoc
@@ -55,6 +56,7 @@ class _$VideoPreviewViewStateCopyWithImpl<$Res,
     Object? title = null,
     Object? duration = null,
     Object? video = null,
+    Object? comment = null,
   }) {
     return _then(_value.copyWith(
       title: null == title
@@ -69,6 +71,10 @@ class _$VideoPreviewViewStateCopyWithImpl<$Res,
           ? _value.video
           : video // ignore: cast_nullable_to_non_nullable
               as XFile,
+      comment: null == comment
+          ? _value.comment
+          : comment // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -82,7 +88,7 @@ abstract class _$$VideoPreviewViewStateImplCopyWith<$Res>
       __$$VideoPreviewViewStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String title, Duration duration, XFile video});
+  $Res call({String title, Duration duration, XFile video, String comment});
 }
 
 /// @nodoc
@@ -102,6 +108,7 @@ class __$$VideoPreviewViewStateImplCopyWithImpl<$Res>
     Object? title = null,
     Object? duration = null,
     Object? video = null,
+    Object? comment = null,
   }) {
     return _then(_$VideoPreviewViewStateImpl(
       title: null == title
@@ -116,6 +123,10 @@ class __$$VideoPreviewViewStateImplCopyWithImpl<$Res>
           ? _value.video
           : video // ignore: cast_nullable_to_non_nullable
               as XFile,
+      comment: null == comment
+          ? _value.comment
+          : comment // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -124,7 +135,10 @@ class __$$VideoPreviewViewStateImplCopyWithImpl<$Res>
 
 class _$VideoPreviewViewStateImpl implements _VideoPreviewViewState {
   const _$VideoPreviewViewStateImpl(
-      {required this.title, required this.duration, required this.video});
+      {required this.title,
+      required this.duration,
+      required this.video,
+      required this.comment});
 
   @override
   final String title;
@@ -132,10 +146,12 @@ class _$VideoPreviewViewStateImpl implements _VideoPreviewViewState {
   final Duration duration;
   @override
   final XFile video;
+  @override
+  final String comment;
 
   @override
   String toString() {
-    return 'VideoPreviewViewState(title: $title, duration: $duration, video: $video)';
+    return 'VideoPreviewViewState(title: $title, duration: $duration, video: $video, comment: $comment)';
   }
 
   @override
@@ -146,11 +162,12 @@ class _$VideoPreviewViewStateImpl implements _VideoPreviewViewState {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.duration, duration) ||
                 other.duration == duration) &&
-            (identical(other.video, video) || other.video == video));
+            (identical(other.video, video) || other.video == video) &&
+            (identical(other.comment, comment) || other.comment == comment));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, title, duration, video);
+  int get hashCode => Object.hash(runtimeType, title, duration, video, comment);
 
   /// Create a copy of VideoPreviewViewState
   /// with the given fields replaced by the non-null parameter values.
@@ -166,7 +183,8 @@ abstract class _VideoPreviewViewState implements VideoPreviewViewState {
   const factory _VideoPreviewViewState(
       {required final String title,
       required final Duration duration,
-      required final XFile video}) = _$VideoPreviewViewStateImpl;
+      required final XFile video,
+      required final String comment}) = _$VideoPreviewViewStateImpl;
 
   @override
   String get title;
@@ -174,6 +192,8 @@ abstract class _VideoPreviewViewState implements VideoPreviewViewState {
   Duration get duration;
   @override
   XFile get video;
+  @override
+  String get comment;
 
   /// Create a copy of VideoPreviewViewState
   /// with the given fields replaced by the non-null parameter values.
