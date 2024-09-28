@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+moviepy
+librosa
+whisper
+aiofiles
+numpy
+requests
+loguru
