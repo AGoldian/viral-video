@@ -6,7 +6,8 @@
 
 # gif
 
-![Демо работы](https://github.com/AGoldian/viral-video/blob/master/videos/gif.gif)
+![Демо работы](videos/gif.gif)
+![Демо работы](videos/output_video_with_subtitles_final.mp4)
 
 Описание:
 Генераторы кандидатов:
