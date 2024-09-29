@@ -19,6 +19,7 @@ dependencies:
   cross_file: ^0.3.4+2
   flutter_riverpod: ^2.5.1
   video_player: ^2.9.1
+  collection: ^1.18.0
 
 dev_dependencies:
   flutter_test:

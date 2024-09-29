@@ -30,6 +30,7 @@ class PickVideoView extends StatelessWidget {
                 const Text(
                   'Крутейший конвертер вашего видео',
                   style: AppTextTheme.h1,
+                  textAlign: TextAlign.center,
                 ),
                 const Text(
                   'в виральные клипы',

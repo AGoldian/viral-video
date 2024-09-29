@@ -1,5 +1,6 @@
 import 'package:cross_file/cross_file.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:video_player/video_player.dart';
 
 part 'video_preview_view_state.freezed.dart';
 
@@ -9,6 +10,7 @@ class VideoPreviewViewState with _$VideoPreviewViewState {
     required String title,
     required Duration duration,
     required XFile video,
+    required VideoPlayerController previewController,
     required String comment,
   }) = _VideoPreviewViewState;
 }

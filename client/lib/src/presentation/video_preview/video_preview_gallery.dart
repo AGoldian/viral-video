@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
 import 'package:viral_video_client/src/common/state_notifier_widget.dart';
 import 'package:viral_video_client/src/presentation/theme/app_text_theme.dart';
 import 'package:viral_video_client/src/presentation/theme/color_theme.dart';
+import 'package:viral_video_client/src/presentation/video_preview/preview_item_widget.dart';
+import 'package:viral_video_client/src/presentation/video_preview/preview_widget.dart';
 import 'package:viral_video_client/src/presentation/video_preview/video_preview_gallery_view_model.dart';
-import 'package:viral_video_client/src/presentation/video_preview/view_state/video_preview_view_state.dart';
+import 'package:collection/collection.dart';
 
 const _previewSide = 96.0;
 
@@ -26,6 +27,7 @@ class _VideoPreviewGallery extends State<VideoPreviewGallery> {
         notifier: widget.viewModel,
         dataBuilder: (context, state) {
           final controller = widget.viewModel.controller;
+          print('Rebuild stateNotifierWidget: $state');
 
           return state.map(
             data: (state) => Scaffold(
@@ -35,6 +37,7 @@ class _VideoPreviewGallery extends State<VideoPreviewGallery> {
                 ),
                 title: Column(
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       state.appBarTitle,
@@ -57,40 +60,47 @@ class _VideoPreviewGallery extends State<VideoPreviewGallery> {
                     color: Colors.white,
                     child: Column(
                       children: [
-                        ...state.videoPreviews.map(
-                          (item) => _PreviewItem(
-                            onTap: () => widget.viewModel.onSelectPreview(0),
-                            viewState: item,
+                        ...state.videoPreviews.mapIndexed(
+                          (index, item) => InkWell(
+                            onTap: () =>
+                                widget.viewModel.onSelectPreview(index),
+                            child: PreviewItemWidget(
+                              viewState: item,
+                            ),
                           ),
                         ),
                         if (state.isLoading)
                           const SizedBox(
-                            height: _previewSide,
                             width: _previewSide * 4,
-                            child: SizedBox(
-                              width: 32,
-                              height: 32,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                SizedBox(
+                                  width: 32,
+                                  height: 32,
+                                  child: Center(
                                     child: CircularProgressIndicator(),
                                   ),
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text(
-                                    'Обработка видео еще не заверешена',
-                                    style: AppTextTheme.body2,
-                                  ),
-                                  Text(
-                                    'новые клипы появятся тут сразу после обработки',
-                                    style: AppTextTheme.caption1,
-                                  ),
-                                ],
-                              ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text(
+                                  'Обработка видео еще\u{00A0}не\u{00A0}заверешена',
+                                  style: AppTextTheme.body2,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Text(
+                                  'новые клипы появятся тут сразу\u{00A0}после\u{00A0}обработки',
+                                  style: AppTextTheme.caption1,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
                             ),
                           ),
                       ],
@@ -100,7 +110,11 @@ class _VideoPreviewGallery extends State<VideoPreviewGallery> {
                     child: Container(
                       color: const Color(0xFFF7F8F9),
                       child: controller != null
-                          ? _PreviewWidget(controller: controller)
+                          ? PreviewWidget(
+                              controller: controller,
+                              comment: state
+                                  .videoPreviews[state.previewIndex!].comment,
+                            )
                           : const Center(
                               child: Text(
                                 'Выберите клип для просмотра',
@@ -120,102 +134,4 @@ class _VideoPreviewGallery extends State<VideoPreviewGallery> {
           );
         },
       );
-}
-
-class _PreviewItem extends StatelessWidget {
-  final VideoPreviewViewState viewState;
-  final VoidCallback onTap;
-
-  const _PreviewItem({
-    required this.viewState,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) => InkWell(
-        onTap: onTap,
-        child: Card(
-          child: Container(
-            height: _previewSide,
-            width: _previewSide * 4,
-            padding: const EdgeInsets.all(8),
-            child: Row(
-              children: [
-                Container(
-                  height: _previewSide,
-                  width: _previewSide,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: const Color(0xFFEFF1F4),
-                  ),
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(viewState.title),
-                      Text(viewState.duration.asPrettyString)
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-}
-
-class _PreviewWidget extends StatefulWidget {
-  final VideoPlayerController controller;
-
-  const _PreviewWidget({required this.controller});
-
-  @override
-  State<StatefulWidget> createState() => _PreviewWidgetState();
-}
-
-class _PreviewWidgetState extends State<_PreviewWidget> {
-  @override
-  void initState() {
-    super.initState();
-    widget.controller.initialize().then(
-      (_) {
-        setState(() {});
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Center(
-          child: widget.controller.value.isInitialized
-              ? AspectRatio(
-                  aspectRatio: widget.controller.value.aspectRatio,
-                  child: VideoPlayer(widget.controller),
-                )
-              : Container(),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              widget.controller.value.isPlaying
-                  ? widget.controller.pause()
-                  : widget.controller.play();
-            });
-          },
-          child: Icon(
-            widget.controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-          ),
-        ),
-      );
-
-  @override
-  void dispose() {
-    widget.controller.dispose();
-    super.dispose();
-  }
 }

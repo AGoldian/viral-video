@@ -10,6 +10,7 @@ import uuid
 import asyncio
 
 from starlette.responses import FileResponse
+import json
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -32,7 +33,7 @@ async def process_file(request: Request):
 
     path = json['path']
 
-    await asyncio.sleep(120)
+    await asyncio.sleep(60)
     # TODO: goldian прикрутить модель на распознавание
 
     return JSONResponse(content={
@@ -56,14 +57,17 @@ def _load_clips_from_dir(path):
 
     for file in os.listdir(directory):
         filename = os.fsdecode(file)
-        if filename.lower().endswith(".mp4"):
-            # TODO: goldian прикрутить хранилище инфы о видосах
-            clips.append({
-                'from': '00:40',
-                'to': '00:50',
-                'reason': 'Очень крутой момент',
-                'fileLink': f'{path}/{filename}'
-            })
+        if filename.lower().endswith(".mp4") and filename.lower() != 'initial.mp4':
+            with open(f'{path}/{filename.lower().replace('.mp4', '.json')}', encoding='UTF-8') as user_file:
+                file_contents = user_file.read()
+                parsed_json = json.loads(file_contents)
+                # TODO: goldian прикрутить хранилище инфы о видосах
+                clips.append({
+                    'from': parsed_json['from'],
+                    'to': parsed_json['to'],
+                    'reason': parsed_json['reason'],
+                    'fileLink': f'{path}/{filename}'
+                })
     return clips
 
 
