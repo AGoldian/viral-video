@@ -4,7 +4,6 @@
 
 # Демо:
 
-![Демо работы](videos/gif.gif)
 ![Демо работы](videos/_out_1-ezgif.com-video-to-gif-converter.gif)
 
 # Описание:
