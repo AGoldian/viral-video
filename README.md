@@ -4,10 +4,7 @@
 
 # Демо:
 
-# gif
-
 ![Демо работы](videos/gif.gif)
-![Демо работы](videos/output_video_with_subtitles_final.mp4)
 
 Описание:
 Генераторы кандидатов:
@@ -58,6 +55,12 @@
    pip install -r requirements.txt
    python main-cli.py --base_path './rest/pythonProject3/' --fname '4cb8085a4154b91c5e6288c33b70949c.mp4'
    ```
+
+   ```bash
+   pip install -r requirements.txt
+   python main-audio-cli.py --base_path './rest/pythonProject3/' --fname '4cb8085a4154b91c5e6288c33b70949c.mp4'
+   ```
+   
 
 2. **Запуск сервиса с использованием Docker:**
 
