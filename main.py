@@ -14,16 +14,15 @@ from settings import config
 import moviepy.editor as mp
 import os
 import json
+
 base_path = './rest/pythonProject3/'
 fname = '4cb8085a4154b91c5e6288c33b70949c.mp4'
 
 video_path = f'{base_path}/{fname}'
 
 
-
 # Нарезаем видео на части
 video_parts = split_video(fname, video_path)
-# Возвращает пути
 
 
 llama_model = AutoModelForCausalLM.from_pretrained(

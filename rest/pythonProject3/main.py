@@ -8,9 +8,12 @@ from fastapi.middleware.cors import CORSMiddleware
 import logging
 import uuid
 import asyncio
+import json
 
 from starlette.responses import FileResponse
-import json
+
+from settings.config import *
+from viral.splash_audio_candidates import get_json_of_audio_moments
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -30,11 +33,11 @@ app.add_middleware(
 @app.post('/process_file')
 async def process_file(request: Request):
     json = await request.json()
+    
 
     path = json['path']
-
     await asyncio.sleep(60)
-    # TODO: goldian прикрутить модель на распознавание
+    
 
     return JSONResponse(content={
         'videoName': path,
@@ -59,13 +62,16 @@ def _load_clips_from_dir(path):
         filename = os.fsdecode(file)
         if filename.lower().endswith(".mp4") and filename.lower() != 'initial.mp4':
             with open(f'{path}/{filename.lower().replace('.mp4', '.json')}', encoding='UTF-8') as user_file:
-                file_contents = user_file.read()
-                parsed_json = json.loads(file_contents)
-                # TODO: goldian прикрутить хранилище инфы о видосах
+                # file_contents = user_file.read()
+                # parsed_json = json.loads()
+                json_candidates_audio = get_json_of_audio_moments(filename,
+                                                    AUDIO_WINDOW_SIZE_IN_SECS, 
+                                                    AUDIO_NUM_CANDIDATES, 
+                                                    AUDIO_OUTPUT_PATH)
                 clips.append({
-                    'from': parsed_json['from'],
-                    'to': parsed_json['to'],
-                    'reason': parsed_json['reason'],
+                    'from': json_candidates_audio['start_time'],
+                    'to': json_candidates_audio['end_time'],
+                    'reason': json_candidates_audio['reason'],
                     'fileLink': f'{path}/{filename}'
                 })
     return clips
