@@ -33,10 +33,7 @@
 
 ## Примеры:
 
-<div align="center">
-  <img src="https://github.com/AGoldian/viral-video/video/gif.gif" alt="Demo GIF 1" width="280"/>
-</div>
-
+![](https://github.com/AGoldian/viral-video/video/gif.gif)
 
 ## Как запустить проект
 
