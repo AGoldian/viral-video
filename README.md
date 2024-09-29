@@ -4,7 +4,9 @@
 
 # Демо:
 
+# gif
 
+![Демо работы](https://github.com/AGoldian/viral-video/blob/master/videos/gif.gif)
 
 Описание:
 Генераторы кандидатов:
@@ -50,11 +52,11 @@
    git clone https://github.com/AGoldian/viral-video.git
    cd viral-video
    ```
+
    ```bash
    pip install -r requirements.txt
    python main-cli.py --base_path './rest/pythonProject3/' --fname '4cb8085a4154b91c5e6288c33b70949c.mp4'
    ```
-
 
 2. **Запуск сервиса с использованием Docker:**
 
@@ -68,11 +70,9 @@ docker run -p 8000:8000 viral-video
 ```
 Это создаст и запустит контейнер, готовый к использованию.
 
-Доступ к веб-интерфейсу:
+**Доступ к веб-интерфейсу:**
 
 Откройте браузер и перейдите по адресу http://localhost:8000, чтобы начать использовать сервис.
-
-
 
 ### Как запустить Flutter фронтенд
 - Установить Flutter следуя официальной документации -- https://docs.flutter.dev/get-started/install
