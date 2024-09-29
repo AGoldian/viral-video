@@ -33,7 +33,7 @@
 
 ## Примеры:
 
-![](https://github.com/AGoldian/viral-video/video/gif.gif)
+![](https://github.com/AGoldian/viral-video/videos/gif.gif)
 
 ## Как запустить проект
 
