@@ -20,6 +20,10 @@ dependencies:
   flutter_riverpod: ^2.5.1
   video_player: ^2.9.1
   collection: ^1.18.0
+  video_editor: ^3.0.0
+  fraction: ^5.0.3
+  permission_handler: ^11.3.1
+  path_provider: ^2.1.4
 
 dev_dependencies:
   flutter_test:

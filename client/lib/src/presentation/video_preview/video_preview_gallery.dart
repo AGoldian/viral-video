@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:viral_video_client/src/common/state_notifier_widget.dart';
 import 'package:viral_video_client/src/presentation/theme/app_text_theme.dart';
@@ -27,7 +30,6 @@ class _VideoPreviewGallery extends State<VideoPreviewGallery> {
         notifier: widget.viewModel,
         dataBuilder: (context, state) {
           final controller = widget.viewModel.controller;
-          print('Rebuild stateNotifierWidget: $state');
 
           return state.map(
             data: (state) => Scaffold(
@@ -66,13 +68,18 @@ class _VideoPreviewGallery extends State<VideoPreviewGallery> {
                                 widget.viewModel.onSelectPreview(index),
                             child: PreviewItemWidget(
                               viewState: item,
+                              onEdit: kIsWeb
+                                  ? null
+                                  : () =>
+                                      widget.viewModel.onEdit(item.filename),
                             ),
                           ),
                         ),
                         if (state.isLoading)
-                          const SizedBox(
-                            width: _previewSide * 4,
-                            child: Column(
+                          SizedBox(
+                            width: min(_previewSide * 4,
+                                MediaQuery.of(context).size.width - 32),
+                            child: const Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -106,23 +113,24 @@ class _VideoPreviewGallery extends State<VideoPreviewGallery> {
                       ],
                     ),
                   ),
-                  Expanded(
-                    child: Container(
-                      color: const Color(0xFFF7F8F9),
-                      child: controller != null
-                          ? PreviewWidget(
-                              controller: controller,
-                              comment: state
-                                  .videoPreviews[state.previewIndex!].comment,
-                            )
-                          : const Center(
-                              child: Text(
-                                'Выберите клип для просмотра',
-                                style: AppTextTheme.h1,
+                  if (kIsWeb)
+                    Expanded(
+                      child: Container(
+                        color: const Color(0xFFF7F8F9),
+                        child: controller != null
+                            ? PreviewWidget(
+                                controller: controller,
+                                comment: state
+                                    .videoPreviews[state.previewIndex!].comment,
+                              )
+                            : const Center(
+                                child: Text(
+                                  'Выберите клип для просмотра',
+                                  style: AppTextTheme.h1,
+                                ),
                               ),
-                            ),
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),

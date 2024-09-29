@@ -12,6 +12,7 @@ class VideoPreviewViewState with _$VideoPreviewViewState {
     required XFile video,
     required VideoPlayerController previewController,
     required String comment,
+    required String filename,
   }) = _VideoPreviewViewState;
 }
 

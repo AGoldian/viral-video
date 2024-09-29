@@ -5,10 +5,10 @@ import 'package:viral_video_client/src/domain/models/process_file_response/proce
 
 const _base = 'http://127.0.0.1:8000';
 
-class ApiImp implements Api {
+class ApiImpl implements Api {
   final Dio _dio;
 
-  const ApiImp({
+  const ApiImpl({
     required Dio dio,
   }) : _dio = dio;
 

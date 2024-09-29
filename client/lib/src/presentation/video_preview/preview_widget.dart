@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -40,6 +41,13 @@ class _PreviewWidgetState extends State<PreviewWidget> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        appBar: kIsWeb
+            ? null
+            : AppBar(
+                leading: BackButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ),
         body: Column(
           children: [
             Expanded(

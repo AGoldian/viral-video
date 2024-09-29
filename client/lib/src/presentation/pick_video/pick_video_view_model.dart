@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:viral_video_client/src/data/api.dart';
 import 'package:viral_video_client/src/navigation/navigation_manager.dart';
 import 'package:viral_video_client/src/presentation/pick_video/view_state/pick_video_view_state.dart';
@@ -33,6 +35,9 @@ class PickVideoViewModel extends StateNotifier<PickVideoViewState> {
   }
 
   Future<void> onPickFile() async {
+    if (!kIsWeb) {
+      await Permission.storage.request();
+    }
     state = state.copyWith(
       isLoading: true,
       processDescription: 'Выберите файл в открывшемся окне',
@@ -63,7 +68,6 @@ class PickVideoViewModel extends StateNotifier<PickVideoViewState> {
           _navigationManager.openVideoPreviewGallery();
         }
         _timerTicks += 1;
-        print('timer ticks: $_timerTicks');
         final response = await _api.poll(path);
         _galleryViewModel.updateDataWithNewModel(response, true);
       },

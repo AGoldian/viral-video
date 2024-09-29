@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:viral_video_client/src/common/state_notifier_widget.dart';
 import 'package:viral_video_client/src/presentation/pick_video/pick_video_view_model.dart';
@@ -19,7 +21,9 @@ class PickVideoView extends StatelessWidget {
         notifier: viewModel,
         dataBuilder: (context, state) => Scaffold(
           body: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
+            padding: EdgeInsets.symmetric(
+              horizontal: min(MediaQuery.of(context).size.width * 0.05, 64),
+            ),
             width: double.infinity,
             height: double.infinity,
             child: Column(
@@ -40,31 +44,56 @@ class PickVideoView extends StatelessWidget {
                   height: 8,
                 ),
                 const Text(
-                  'Уникальное решение основанное на отечественных технологиях\n' // мб добавить \u{00A0} в нужных местах
-                  'позволит вырезать захватывающие клипы из самых длинных видео\n'
+                  'Уникальное решение основанное на\u{00A0}отечественных\u{00A0}технологиях\n' // мб добавить \u{00A0} в нужных местах
+                  'позволит вырезать захватывающие клипы из\u{00A0}самых\u{00A0}длинных\u{00A0}видео\n'
                   'и наложить текст, для последующей публикации',
                   textAlign: TextAlign.center,
                   style: AppTextTheme.caption1,
                 ),
-                const Expanded(child: SizedBox()),
-                Wrap(
-                  spacing: 16,
-                  runSpacing: 16,
-                  alignment: WrapAlignment.center,
-                  runAlignment: WrapAlignment.center,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        maxWidth: 500,
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 32),
+                  child: TextField(
+                    enabled: !state.isLoading,
+                    maxLines: 3,
+                    style: AppTextTheme.caption1,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: ColorTheme.controlMain,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
                       ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: ColorTheme.controlMain,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      hintText:
+                          '[Опционально] введите промпт для генерации клипов с определенными параметрами',
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Flexible(
                       child: _InputWidget(
                         onSubmit: viewModel.onSubmit,
                         enabled: !state.isLoading,
                       ),
                     ),
+                    SizedBox(
+                      width:
+                          min(MediaQuery.of(context).size.width * 0.0128, 16),
+                    ),
                     const Text(
                       'или',
+                    ),
+                    SizedBox(
+                      width:
+                          min(MediaQuery.of(context).size.width * 0.0128, 16),
                     ),
                     PrettyButton.secondary(
                       text: 'Загрузить видео',
@@ -147,7 +176,7 @@ class _InputWidgetState extends State<_InputWidget> {
             borderRadius: BorderRadius.circular(8),
           ),
           prefixIcon: const Icon(Icons.ondemand_video),
-          hintText: 'Вставьте сюда ссылку на RuTube',
+          hintText: 'Вставьте ссылку на RuTube',
           suffixIcon: PrettyButton.action(
             text: 'Создать клипы',
             enabled: textEditingController.text.isNotEmpty && widget.enabled,

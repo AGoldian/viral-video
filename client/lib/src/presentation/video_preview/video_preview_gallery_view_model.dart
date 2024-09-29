@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
 import 'package:viral_video_client/src/data/api.dart';
 import 'package:viral_video_client/src/navigation/navigation_manager.dart';
@@ -25,6 +29,14 @@ class VideoPreviewGalleryViewModel extends StateNotifier<GalleryViewState> {
 
   void onBack() => _navigationManager.pop();
 
+  Future<void> onEdit(String filename) async {
+    final path =
+        (await getExternalStorageDirectories(type: StorageDirectory.downloads))!
+            .single
+            .path;
+    _navigationManager.openEditorPage('$path/$filename');
+  }
+
   Future<void> updateDataWithNewModel(ProcessFileResponse model,
       [bool loading = false]) async {
     final dataOrNull = state.map(
@@ -43,9 +55,22 @@ class VideoPreviewGalleryViewModel extends StateNotifier<GalleryViewState> {
         }
 
         final video = await _api.getFile(clip.fileLink);
-        _cachedControllers[clip.fileLink] = VideoPlayerController.networkUrl(
-          Uri.parse(video.path),
-        );
+        final fileName = clip.fileLink.split('/')[1];
+        if (!kIsWeb) {
+          final path = (await getExternalStorageDirectories(
+                  type: StorageDirectory.downloads))!
+              .single
+              .path;
+          await video.saveTo('$path/$fileName');
+          _cachedControllers[clip.fileLink] = VideoPlayerController.file(
+            File('$path/$fileName'),
+          );
+        } else {
+          _cachedControllers[clip.fileLink] = VideoPlayerController.networkUrl(
+            Uri.parse(video.path),
+          );
+        }
+
         final previewController = _cachedControllers[clip.fileLink];
         previews.add(
           VideoPreviewViewState(
@@ -54,6 +79,7 @@ class VideoPreviewGalleryViewModel extends StateNotifier<GalleryViewState> {
             video: video,
             comment: clip.reason,
             previewController: previewController,
+            filename: fileName,
           ),
         );
         i += 1;
@@ -76,7 +102,7 @@ class VideoPreviewGalleryViewModel extends StateNotifier<GalleryViewState> {
     }
   }
 
-  void onSelectPreview(int index) {
+  Future<void> onSelectPreview(int index) async {
     final dataOrNull = state.map(
       data: (data) => data,
       empty: (_) => null,
@@ -86,12 +112,26 @@ class VideoPreviewGalleryViewModel extends StateNotifier<GalleryViewState> {
       return;
     }
 
-    state = dataOrNull.copyWith(
-      previewIndex: index,
-    );
+    if (kIsWeb) {
+      state = dataOrNull.copyWith(
+        previewIndex: index,
+      );
 
-    controller = VideoPlayerController.networkUrl(
-      Uri.parse(dataOrNull.videoPreviews[index].video.path),
-    );
+      controller = VideoPlayerController.networkUrl(
+        Uri.parse(dataOrNull.videoPreviews[index].video.path),
+      );
+    } else {
+      final path = (await getExternalStorageDirectories(
+              type: StorageDirectory.downloads))!
+          .single
+          .path;
+      final filename = dataOrNull.videoPreviews[index].filename;
+      _navigationManager.openPreviewPage(
+        VideoPlayerController.file(
+          File('$path/$filename'),
+        ),
+        dataOrNull.videoPreviews[index].comment,
+      );
+    }
   }
 }

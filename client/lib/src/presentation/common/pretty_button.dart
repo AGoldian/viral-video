@@ -94,7 +94,7 @@ class PrettyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ConstrainedBox(
         constraints: BoxConstraints(
-          minWidth: 84,
+          minWidth: 64,
           maxWidth: 160,
           minHeight: height,
         ),
